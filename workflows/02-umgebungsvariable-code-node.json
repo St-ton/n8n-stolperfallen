@@ -1,0 +1,47 @@
+{
+  "name": "Vorlage 02: Umgebungsvariable im Code-Node pruefen",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "2bd0f89e-bedc-4972-8093-3e9527b61dac",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prueft, ob eine Umgebungsvariable im Code-Node ankommt, ohne den Wert auszugeben.\n// process.env funktioniert in der Code-Node-Sandbox nicht, der Zugriff laeuft ueber $env.\n// Je nach n8n-Version und Konfiguration ist $env zusaetzlich gesperrt (siehe README).\nconst name = 'DEMO_VARIABLE';\ntry {\n  const laenge = String($env[name] ?? '').length;\n  return [{ json: { name, ok: laenge > 0, laenge } }];\n} catch (e) {\n  return [{ json: { name, ok: false, hinweis: 'Zugriff auf $env blockiert oder Variable fehlt: ' + e.message } }];\n}"
+      },
+      "id": "799954e5-03d4-42e4-ab16-09f3e2d51b26",
+      "name": "$env pruefen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "$env pruefen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
