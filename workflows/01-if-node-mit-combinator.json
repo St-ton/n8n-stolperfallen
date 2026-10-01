@@ -1,0 +1,140 @@
+{
+  "name": "Vorlage 01: If-Node mit combinator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vorlage-status",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "ed51e9e4-5628-4eda-80c4-1f96d5d89006",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "6cfb1b12-af06-4600-a3d8-d2b61847e156"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "80b357ee-1c3b-447e-a4f7-eab6308810ae",
+              "leftValue": "={{ $json.body.status }}",
+              "rightValue": "dringend",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "58518dd3-4d86-460c-a4d8-194124a0137c",
+      "name": "Status dringend?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8c1bd79-5d3e-4be5-a008-9757757950cf",
+              "name": "zweig",
+              "value": "dringend",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "9a1f7301-6466-4b80-8844-edc0cc2b4071",
+      "name": "Zweig dringend",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        500,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "13380c2a-5c59-4fc5-82f3-8caa8843a14d",
+              "name": "zweig",
+              "value": "normal",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "90310cb0-9b3a-4f4c-a951-e372dd741d8a",
+      "name": "Zweig normal",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        500,
+        100
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Status dringend?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status dringend?": {
+      "main": [
+        [
+          {
+            "node": "Zweig dringend",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Zweig normal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
