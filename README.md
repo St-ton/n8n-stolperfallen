@@ -1,5 +1,6 @@
 # n8n: Vorlagen zu stillen Fehlern
 
+[English version](README.en.md)
 Drei kleine n8n-Workflows zu Fehlern, die keine Fehlermeldung erzeugen: der Workflow läuft grün und tut trotzdem das Falsche. Die Vorlagen stammen aus dem Betrieb von Automatisierungen bei [Bot-Agent](https://bot-agent.de) und sind bewusst klein gehalten.
 
 | Datei | Zweck |
